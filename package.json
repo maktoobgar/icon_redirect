@@ -2,6 +2,7 @@
 	"name": "icon-redirect",
 	"displayName": "Icon Redirect",
 	"description": "Redirect src/icons/*.svelte to corresponding .svg files",
+	"repository": "https://github.com/maktoobgar/icon_redirect",
 	"version": "0.0.0",
 	"engines": {
 		"vscode": "^1.75.0"
