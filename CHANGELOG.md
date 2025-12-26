@@ -5,6 +5,8 @@ All notable changes to the "icon-redirect" extension will be documented in this 
 ## [Unreleased]
 
 
+<!-- ## 0.1.0 - 2025-12-26 -->
+
 ## 0.0.1 - 2025-12-23
 
 - 🐛 fix: build error fix

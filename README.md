@@ -1,7 +1,7 @@
 # Icon Redirect README
 
-Basically when clicked on `src/icons/Icon.svelte`, it opens up the `src/icons/svg/icon.svg` file beside the `Icon.svelte` if found.
-The `.svg` file that it tries to find, is going to be a snake case version of the `.svelte` name itself.
+Basically when clicked on `src/icons/Icon.svelte` which inside it is a component which is actually just a simple `svg` icon, it opens up a new tab to preview the `svg` representor of how the `Icon.svelte` actually looks.
+Just for more simplification, you click on `src/icons/Icon.svelte`, you will see a preview render of the svg right beside it.
 
 ## How to build
 
