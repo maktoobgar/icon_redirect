@@ -4,6 +4,11 @@ All notable changes to the "icon-redirect" extension will be documented in this 
 
 ## [Unreleased]
 
+
+## 0.1.1 - 2025-12-28
+
+- 🐛 fix: annoying bugs fixed
+
 ## 0.1.0 - 2025-12-26
 
 - 🎉 feat: now the icon will render a preview, either if you have an `.svg` representor or either you do not
