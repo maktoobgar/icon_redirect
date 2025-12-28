@@ -15,7 +15,20 @@ export function activate(context: vscode.ExtensionContext) {
 	// 2. Listen for new documents being opened
 	const disposable = vscode.workspace.onDidOpenTextDocument(
 		async (document) => {
-			await checkAndRedirect(document.uri);
+			// Add a small delay (e.g., 100ms) to allow the editor UI to update.
+			// onDidOpenTextDocument fires slightly before the editor is technically "visible" in the API.
+			setTimeout(async () => {
+				// Check if the document is actually visible in any open editor tab/pane.
+				// "Peek Definition" (Ctrl+Hover) loads the doc but does NOT add it to visibleTextEditors.
+				const isVisible = vscode.window.visibleTextEditors.some(
+					(editor) => editor.document.uri.toString() === document.uri.toString()
+				);
+
+				// Only run the redirect logic if the user actually opened the file in a tab
+				if (isVisible) {
+					await checkAndRedirect(document.uri);
+				}
+			}, 100);
 		}
 	);
 
@@ -28,13 +41,6 @@ async function checkAndRedirect(uri: vscode.Uri) {
 		return;
 	}
 
-	// 1. "Pin" the .svelte file first.
-	// passing { preview: false } ensures it stays open and isn't replaced by the next command.
-	await vscode.commands.executeCommand("vscode.open", uri, {
-		preview: false,
-		preserveFocus: true
-	});
-
 	let svelteContent = "";
 	if (uri.path.endsWith(".svelte")) {
 		svelteContent = transformSvgContent(fs.readFileSync(uri.path, "utf8"));
@@ -42,6 +48,13 @@ async function checkAndRedirect(uri: vscode.Uri) {
 
 	const fileName = path.basename(uri.fsPath, ".svelte");
 	if (svelteContent && svelteContent.trim().length > 0) {
+		// 1. "Pin" the .svelte file first.
+		// passing { preview: false } ensures it stays open and isn't replaced by the next command.
+		await vscode.commands.executeCommand("vscode.open", uri, {
+			preview: false,
+			preserveFocus: true
+		});
+
 		const panel = vscode.window.createWebviewPanel(
 			"svgPreview", // internal id
 			`${fileName}.svg preview`, // tab title
